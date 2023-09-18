@@ -38,9 +38,11 @@ class UniversityAdapter(
         return universities.size
     }
 
-    // Define the updateData method to update the dataset
-    fun updateData(newUniversities: List<University>) {
-        universities = newUniversities
+    fun updateData(universities: List<University>) {
+        this.universities = universities
         notifyDataSetChanged()
     }
+
+    // Define the updateData method to update the dataset
+
 }
