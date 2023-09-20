@@ -1,6 +1,9 @@
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.task.vahan.R
@@ -15,6 +18,7 @@ class UniversityAdapter(
         val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
         val countryTextView: TextView = itemView.findViewById(R.id.countryTextView)
         val websiteTextView: TextView = itemView.findViewById(R.id.websiteTextView)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,12 +30,19 @@ class UniversityAdapter(
         val university = universities[position]
         holder.nameTextView.text = university.name
         holder.countryTextView.text = university.country
-        holder.websiteTextView.text = university.website
+        holder.websiteTextView.text = university.web_pages.toString();
+
+
 
         // Set an onClick listener for the website TextView
+        holder.websiteTextView.text = ("${university.web_pages.toString().replace("[", "").replace("]", "")}");
+
         holder.websiteTextView.setOnClickListener {
-            onItemClick(university.website) // Pass the website URL to the click listener
+            val url = university.web_pages.toString().replace("[", "").replace("]", "");
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url.toString()))
+            it.context.startActivity(intent)
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -42,6 +53,7 @@ class UniversityAdapter(
         this.universities = universities
         notifyDataSetChanged()
     }
+
 
     // Define the updateData method to update the dataset
 
